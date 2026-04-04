@@ -22,12 +22,6 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/boats",              icon: <IconBoat      size={17} />, key: "boats" },
   { href: "/owners",             icon: <IconOwner     size={17} />, key: "owners" },
   { href: "/sessions",           icon: <IconSessions  size={17} />, key: "parkingSessions" },
-  { href: "/payments",           icon: <IconPayment   size={17} />, key: "payments" },
-  { href: "/services",           icon: <IconServices  size={17} />, key: "services" },
-  { href: "/employees",          icon: <IconEmployee  size={17} />, key: "employees", adminOnly: true },
-  { href: "/expenses",           icon: <IconExpense   size={17} />, key: "expenses", adminOnly: true },
-  { href: "/reminders",          icon: <IconBell      size={17} />, key: "notificationQueue" },
-  { href: "/reports",            icon: <IconReports   size={17} />, key: "reports" },
   { href: "/settings",           icon: <IconSettings  size={17} />, key: "settings", adminOnly: true },
 ];
 
