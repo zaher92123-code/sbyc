@@ -46,7 +46,7 @@ export default async function PaymentsPage({ searchParams }: { searchParams: Pro
         <Link href="/payments/new" className="btn-primary">{t("newPayment")}</Link>
       </div>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4">
         <div className="stat-card">
           <div className="mb-1"><IconCurrency size={24} /></div>
           <p className="text-xl font-bold num text-slate-900">{formatOMR(totalCollected)}</p>
