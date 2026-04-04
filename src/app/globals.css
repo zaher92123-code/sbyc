@@ -226,3 +226,10 @@
   .data-table th, .data-table td { padding: 8px 10px; }
   .card { border-radius: 12px; }
 }
+
+/* Mobile page headers */
+@media (max-width: 640px) {
+  .page-header { flex-direction: column; align-items: stretch !important; gap: 12px; }
+  .page-header .btn-primary { text-align: center; justify-content: center; }
+  .form-input, .form-select { min-width: 0 !important; width: 100%; }
+}

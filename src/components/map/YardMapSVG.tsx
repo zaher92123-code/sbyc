@@ -228,10 +228,10 @@ export default function YardMapSVG() {
       </div>
 
       {/* Map + side panel */}
-      <div className="flex flex-1 gap-4 min-h-0">
+      <div className="flex flex-col lg:flex-row flex-1 gap-4 min-h-0">
 
         {/* Landscape map — grows to fill space */}
-        <div className="flex-1 min-w-0 flex flex-col justify-start">
+        <div className="flex-1 min-w-0 flex flex-col justify-start overflow-x-auto">
           {/*
             Outer wrapper: sets the landscape aspect ratio.
             padding-bottom = 500/1040 × 100% ≈ 48.08%
@@ -365,10 +365,10 @@ export default function YardMapSVG() {
 
         {/* Info panel — slides in beside map */}
         <div className={`flex-shrink-0 transition-all duration-300 overflow-hidden ${
-          selected ? "w-[300px] opacity-100" : "w-0 opacity-0"
+          selected ? "w-full lg:w-[300px] opacity-100" : "w-0 lg:w-0 opacity-0"
         }`}>
           {selected && (
-            <div className="w-[300px] h-full">
+            <div className="w-full lg:w-[300px] h-full">
               <SpotInfoPanel spot={selected} onClose={()=>setSelected(null)} inline onRefresh={() => { setSelected(null); setRefreshKey(k => k + 1); }}/>
             </div>
           )}
