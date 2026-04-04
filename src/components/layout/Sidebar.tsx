@@ -90,8 +90,8 @@ export default function Sidebar({ user }: { user: User | null }) {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-white text-xs font-semibold truncate">{user?.full_name || "User"}</p>
-            <p className="text-[11px] capitalize" style={{ color: "rgba(255,255,255,0.4)" }}>
-              {isAdmin ? t("admin") : t("staff")}
+            <p className="text-[11px]" style={{ color: "rgba(255,255,255,0.4)" }}>
+              {(user as any)?.job_title || (isAdmin ? t("admin") : t("staff"))}
             </p>
           </div>
           <button onClick={handleSignOut} type="button"
