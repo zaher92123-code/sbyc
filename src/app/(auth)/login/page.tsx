@@ -11,20 +11,46 @@ export default function LoginPage() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [attempts, setAttempts] = useState(0);
+  const [lockedUntil, setLockedUntil] = useState<number | null>(null);
   const router = useRouter();
   const supabase = createClient();
 
+  const MAX_ATTEMPTS = 5;
+  const LOCKOUT_MINUTES = 5;
+
+  const isLocked = lockedUntil !== null && Date.now() < lockedUntil;
+  const remainingSeconds = isLocked ? Math.ceil((lockedUntil! - Date.now()) / 1000) : 0;
+  const remainingMinutes = Math.ceil(remainingSeconds / 60);
+
   async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
+
+    if (isLocked) {
+      setError(`Too many attempts. Try again in ${remainingMinutes} minute${remainingMinutes !== 1 ? "s" : ""}.`);
+      return;
+    }
+
     setLoading(true);
     setError(null);
 
     const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
-      setError(error.message);
+      const newAttempts = attempts + 1;
+      setAttempts(newAttempts);
+      if (newAttempts >= MAX_ATTEMPTS) {
+        const lockTime = Date.now() + LOCKOUT_MINUTES * 60 * 1000;
+        setLockedUntil(lockTime);
+        setError(`Account locked for ${LOCKOUT_MINUTES} minutes after ${MAX_ATTEMPTS} failed attempts.`);
+        setTimeout(() => { setLockedUntil(null); setAttempts(0); }, LOCKOUT_MINUTES * 60 * 1000);
+      } else {
+        setError(`Invalid credentials. ${MAX_ATTEMPTS - newAttempts} attempt${MAX_ATTEMPTS - newAttempts !== 1 ? "s" : ""} remaining.`);
+      }
       setLoading(false);
     } else {
+      setAttempts(0);
+      setLockedUntil(null);
       router.push("/dashboard");
       router.refresh();
     }
@@ -117,7 +143,7 @@ export default function LoginPage() {
 
               <button
                 type="submit"
-                disabled={loading}
+                disabled={loading || isLocked}
                 className="w-full py-3 rounded-xl font-bold text-sm text-white transition-all flex items-center justify-center gap-2 disabled:opacity-60"
                 style={{ background: "linear-gradient(135deg, #0E7490 0%, #0369a1 100%)", boxShadow: "0 4px 16px rgba(14, 116, 144, 0.4)" }}
               >
