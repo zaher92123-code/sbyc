@@ -141,7 +141,7 @@ export const T = {
   vesselInformation: { en: "Vessel Information",      ar: "معلومات السفينة" },
   vesselNameStar:    { en: "Vessel Name *",           ar: "اسم السفينة *" },
   regNumberStar:     { en: "Registration Number *",   ar: "رقم التسجيل *" },
-  vesselType:        { en: "Vessel Type",             ar: "نوع السفينة" },
+  vesselType:        { en: "Vessel Type",             ar: "نوع القارب" },
   selectType:        { en: "Select type…",            ar: "اختر النوع…" },
   dhow:              { en: "Dhow",                    ar: "داو (محمل)" },
   motorboat:         { en: "Motorboat",               ar: "قارب بمحرك" },
