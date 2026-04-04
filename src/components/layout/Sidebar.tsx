@@ -22,6 +22,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/boats",              icon: <IconBoat      size={17} />, key: "boats" },
   { href: "/owners",             icon: <IconOwner     size={17} />, key: "owners" },
   { href: "/sessions",           icon: <IconSessions  size={17} />, key: "parkingSessions" },
+  { href: "/payments",           icon: <IconPayment   size={17} />, key: "payments" },
 ];
 
 export default function Sidebar({ user }: { user: User | null }) {
