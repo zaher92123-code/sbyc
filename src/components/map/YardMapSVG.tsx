@@ -84,13 +84,15 @@ function Spot({ spot, selected, onClick }: { spot:YardSpot; selected:boolean; on
       <g transform={`translate(${x},${y})`}>
         <BoatSilhouette side={side} status={spot.status}/>
       </g>
-      <rect x={side==="left"?x+SW+4:x-18} y={cy-6} width={14} height={12} rx="2"
-        fill="rgba(0,0,0,0.5)" opacity={lit?1:0.65}/>
-      <text x={side==="left"?x+SW+5:x-5} y={cy+4}
-        fontSize="8.5" fontFamily="DM Mono, Courier New, monospace" fontWeight="700"
-        fill={p.numColor} textAnchor={side==="left"?"start":"end"} opacity={lit?1:0.7}>
-        {spot.id}
-      </text>
+      <g transform={`rotate(90, ${side==="left"?x+SW+11:x-11}, ${cy})`}>
+        <rect x={side==="left"?x+SW+4:x-18} y={cy-6} width={14} height={12} rx="2"
+          fill="rgba(0,0,0,0.5)" opacity={lit?1:0.65}/>
+        <text x={side==="left"?x+SW+11:x-11} y={cy+3}
+          fontSize="8.5" fontFamily="DM Mono, Courier New, monospace" fontWeight="700"
+          fill={p.numColor} textAnchor="middle" opacity={lit?1:0.7}>
+          {spot.id}
+        </text>
+      </g>
     </g>
   );
 }
