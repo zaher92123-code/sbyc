@@ -76,12 +76,12 @@ export const SVG_LAYOUT = {
   leftStep: 34,        // px between consecutive slot centre-Ys (going north)
 
   // COL-B (right) — spot 25 at top, spot 45 at bottom
-  rightX: 292,         // slot left edge X
-  rightTopCY: 112,     // centre-Y of spot 25 (northernmost)
+  rightX: 332,         // slot left edge X
+  rightTopCY: 42,     // centre-Y of spot 25 (northernmost)
   rightStep: 33,       // px between consecutive slot centre-Ys (going south)
 
   // Service building (bottom-right, below all 21 right-column spots)
-  buildingTopY: 808,
+  buildingTopY: 738,
   buildingHeight: 132,
 } as const;
 

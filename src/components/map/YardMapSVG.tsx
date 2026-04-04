@@ -305,7 +305,7 @@ export default function YardMapSVG() {
               fill="url(#p_road)" opacity="0.8"/>
             <path d="M 462,54 L 464,506 462,706 L 458,806 444,882 430,950"
               fill="none" stroke="#383838" strokeWidth="2" opacity="0.6"/>
-            <path d="M 30,30 C 175,14 295,10 362,22 L 412,54 L 444,118 L 460,286 L 464,506 L 462,706 L 458,806 L 444,882 L 430,950 L 80,950 L 54,914 L 34,856 L 22,726 L 16,544 L 16,384 L 22,256 L 32,158 L 38,88 L 30,30 Z"
+            <path d="M 30,30 C 175,14 295,6 380,8 L 430,16 L 452,40 L 458,80 L 460,286 L 464,506 L 462,706 L 458,806 L 444,882 L 430,950 L 80,950 L 54,914 L 34,856 L 22,726 L 16,544 L 16,384 L 22,256 L 32,158 L 38,88 L 30,30 Z"
               fill="url(#p_asphalt)" stroke="#363636" strokeWidth="2"/>
             <rect x="164" y="28" width="166" height="922" fill="url(#p_aisle)" opacity="0.55"/>
             <line x1="164" y1="30" x2="164" y2="946" stroke="#ffffff07" strokeWidth="1"/>
