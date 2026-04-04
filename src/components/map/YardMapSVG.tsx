@@ -323,17 +323,7 @@ export default function YardMapSVG() {
               <rect x="62" y="72" width="20" height="16" rx="1" fill="#0a1020" stroke="#1d2e48" strokeWidth="0.7"/>
               <text x="72" y="58" fontSize="5" fill="#2e4868" fontFamily="DM Mono, monospace" fontWeight="700" textAnchor="middle">{t("workshop")}</text>
             </g>
-            <g opacity="0.6">
-              <rect x="305" y="18" width="100" height="34" rx="3" fill="#131d2d" stroke="#1d2e48" strokeWidth="1.2"/>
-              {[314,332,350,368,386,404].map((bx,i)=>(
-                <g key={i}>
-                  <line x1={bx} y1={52} x2={bx+16} y2={84} stroke="#3a5270" strokeWidth="2" strokeLinecap="round"/>
-                  <line x1={bx+8} y1={52} x2={bx-4} y2={84} stroke="#3a5270" strokeWidth="1.2" opacity="0.55" strokeLinecap="round"/>
-                </g>
-              ))}
-              <line x1="310" y1="72" x2="410" y2="72" stroke="#3a5270" strokeWidth="1.3"/>
-              <text x="355" y="36" fontSize="5" fill="#2e4868" fontFamily="DM Mono, monospace" fontWeight="700" textAnchor="middle">{t("frameStorage")}</text>
-            </g>
+
             <g filter="url(#f_bshadow)">
               <rect x={bX} y={bY} width={bW} height={bH} rx="5" fill="#0d1626" stroke="#182840" strokeWidth="2"/>
               <line x1={bX+6} y1={bY+bH/2} x2={bX+bW-6} y2={bY+bH/2} stroke="#1a3050" strokeWidth="1.5"/>
@@ -353,11 +343,7 @@ export default function YardMapSVG() {
               fontFamily="DM Mono, monospace" fontWeight="700" textAnchor="middle" letterSpacing="2">COL-A · 1–24</text>
             <text x={L.rightX+SW/2} y={975} fontSize="6.5" fill="#ffffff12"
               fontFamily="DM Mono, monospace" fontWeight="700" textAnchor="middle" letterSpacing="2">COL-B · 25–45</text>
-            <g transform="translate(247,984)">
-              <rect x="-46" y="-11" width="92" height="22" rx="5" fill="#d4a85318" stroke="#d4a85348" strokeWidth="1.2"/>
-              <text x="0" y="5" fontSize="7.5" fill="#d4a853" fontFamily="DM Mono, monospace"
-                fontWeight="700" textAnchor="middle" letterSpacing="1.5">▲  {t("entrance")}</text>
-            </g>
+
             <g transform="translate(473,992)" opacity="0.42">
               <circle r="16" fill="#05080f" stroke="#182840" strokeWidth="1.2"/>
               <path d="M 0,-13 L 3.5,-3 L 0,1 L -3.5,-3 Z" fill="#22d3ee"/>
