@@ -139,7 +139,7 @@ export const T = {
   // ── Boat form ───────────────────────────────────────────────────────────────
   registerNewVessel: { en: "Register New Vessel",     ar: "تسجيل سفينة جديدة" },
   vesselInformation: { en: "Vessel Information",      ar: "معلومات السفينة" },
-  vesselNameStar:    { en: "Vessel Name *",           ar: "اسم السفينة *" },
+  vesselNameStar:    { en: "Vessel Name *",           ar: "اسم القارب *" },
   regNumberStar:     { en: "Registration Number *",   ar: "رقم التسجيل *" },
   vesselType:        { en: "Vessel Type",             ar: "نوع القارب" },
   selectType:        { en: "Select type…",            ar: "اختر النوع…" },
@@ -379,7 +379,7 @@ export const T = {
   sentAt:            { en: "Sent At",                   ar: "تاريخ الإرسال" },
   // ── Placeholder descriptions ────────────────────────────────────────────────
   phOwnerName:       { en: "Owner's full name",         ar: "اسم المالك الكامل" },
-  phBoatName:        { en: "Vessel name",               ar: "اسم السفينة" },
+  phBoatName:        { en: "Vessel name",               ar: "اسم القارب" },
   phSpotNumber:      { en: "Parking spot number",       ar: "رقم موقف الإيقاف" },
   phExpiryDate:      { en: "Session expiry date",       ar: "تاريخ انتهاء الجلسة" },
   phEntryDate:       { en: "Session start date",        ar: "تاريخ بداية الجلسة" },
