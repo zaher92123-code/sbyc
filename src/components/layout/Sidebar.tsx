@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
@@ -25,13 +25,18 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/payments",           icon: <IconPayment   size={17} />, key: "payments" },
 ];
 
-export default function Sidebar({ user }: { user: User | null }) {
+export default function Sidebar({ user, mobileOpen, onMobileClose }: { user: User | null; mobileOpen?: boolean; onMobileClose?: () => void }) {
   const pathname = usePathname();
   const router   = useRouter();
   const supabase = createClient();
   const { t }    = useLanguage();
 
   const isAdmin = (user as any)?.role?.name === "admin";
+
+  // Close mobile menu on navigation
+  useEffect(() => {
+    if (onMobileClose) onMobileClose();
+  }, [pathname]);
 
   async function handleSignOut() {
     await supabase.auth.signOut();
@@ -40,15 +45,15 @@ export default function Sidebar({ user }: { user: User | null }) {
 
   const visibleItems = NAV_ITEMS.filter(item => !item.adminOnly || isAdmin);
 
-  return (
+  const sidebarContent = (
     <aside
-      className="flex-shrink-0 flex flex-col w-[260px] h-full overflow-y-auto"
+      className="flex flex-col w-[260px] h-full overflow-y-auto flex-shrink-0"
       style={{
         background: "linear-gradient(180deg, #0A1628 0%, #0d1f3c 60%, #0A1628 100%)",
         borderRight: "1px solid rgba(255,255,255,0.06)",
       }}
     >
-      <div className="px-5 py-5 flex-shrink-0" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+      <div className="px-5 py-5 flex-shrink-0 flex items-center justify-between" style={{ borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="flex items-center gap-3">
           <div className="w-9 h-9 rounded-xl flex items-center justify-center flex-shrink-0"
             style={{ background: "linear-gradient(135deg, #0E7490, #0369a1)" }}>
@@ -59,6 +64,12 @@ export default function Sidebar({ user }: { user: User | null }) {
             <div className="text-[11px]" style={{ color: "rgba(255,255,255,0.4)" }}>{t("appTagline")}</div>
           </div>
         </div>
+        {/* Mobile close button */}
+        {onMobileClose && (
+          <button onClick={onMobileClose} className="lg:hidden text-white/50 hover:text-white p-1">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+        )}
       </div>
 
       <nav className="flex-1 px-3 py-4 space-y-0.5">
@@ -102,5 +113,24 @@ export default function Sidebar({ user }: { user: User | null }) {
         </div>
       </div>
     </aside>
+  );
+
+  return (
+    <>
+      {/* Desktop sidebar */}
+      <div className="hidden lg:flex h-full">
+        {sidebarContent}
+      </div>
+
+      {/* Mobile overlay */}
+      {mobileOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 flex">
+          <div className="fixed inset-0 bg-black/60" onClick={onMobileClose} />
+          <div className="relative z-50 h-full animate-slide-in">
+            {sidebarContent}
+          </div>
+        </div>
+      )}
+    </>
   );
 }

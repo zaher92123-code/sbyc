@@ -210,3 +210,19 @@
 .animate-slide-up {
   animation: slideUp 0.25s ease-out;
 }
+
+/* Mobile sidebar slide-in */
+@keyframes slideIn {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+.animate-slide-in {
+  animation: slideIn 0.25s ease-out;
+}
+
+/* Mobile responsive tables */
+@media (max-width: 768px) {
+  .data-table { font-size: 13px; }
+  .data-table th, .data-table td { padding: 8px 10px; }
+  .card { border-radius: 12px; }
+}
