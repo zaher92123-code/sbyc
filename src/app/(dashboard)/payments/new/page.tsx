@@ -118,7 +118,7 @@ export default function NewPaymentPage() {
               <input type="number" step="0.001" min="0.001" value={form.amount} onChange={(e) => setForm((f) => ({ ...f, amount: e.target.value }))} placeholder="0.000" className="form-input pl-12 font-mono" required />
             </div>
             {selectedSession && form.amount && (
-              <p className="text-xs text-slate-400 mt-1">{t("remainingAfter")} {formatOMR(selectedSession.remaining_balance - parseFloat(form.amount || "0"))}</p>
+              <p className="text-xs text-slate-400 mt-1">{t("remainingAfter")} {formatOMR(selectedSession.remaining_balance - (parseFloat(form.amount) || 0))}</p>
             )}
           </div>
           <div>

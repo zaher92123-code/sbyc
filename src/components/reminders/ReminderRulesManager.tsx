@@ -314,7 +314,7 @@ function RuleForm({ initial, onSave, onCancel }: {
           <div className="flex items-center gap-2">
             <input type="number" className="form-input w-24"
               value={form.days_before_end ?? 7}
-              onChange={e => set("days_before_end", parseInt(e.target.value) || 0)} />
+              onChange={e => set("days_before_end", parseInt(e.target.value, 10) || 0)} />
             <span className="text-sm text-slate-500">{t("daysWord")}</span>
           </div>
           <p className="text-xs text-slate-400 mt-1">

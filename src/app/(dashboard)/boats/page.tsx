@@ -12,7 +12,7 @@ export default async function BoatsPage({ searchParams }: { searchParams: Promis
   const t = await getT();
   const params = await searchParams;
   const supabase = await createClient();
-  const page = Math.max(1, parseInt(params.page || "1"));
+  const page = Math.max(1, parseInt(params.page || "1", 10));
   const from = (page - 1) * PAGE_SIZE;
   const to = from + PAGE_SIZE - 1;
 

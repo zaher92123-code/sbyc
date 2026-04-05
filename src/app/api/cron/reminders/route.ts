@@ -27,16 +27,12 @@ export async function POST(request: NextRequest) {
 async function runReminderJob() {
   const supabase = await createServiceClient();
   const today = new Date().toISOString().split("T")[0];
-
-  console.log(`[Cron Job] Starting at ${new Date().toISOString()}`);
-
   // ═══ STEP 1: Refresh session statuses ═══
   await supabase.rpc("refresh_session_statuses");
 
   // ═══ STEP 2: Recalculate all penalties ═══
   try {
     await supabase.rpc("recalculate_all_penalties");
-    console.log("[Cron Job] Penalties recalculated");
   } catch (err) {
     console.error("[Cron Job] Failed to recalculate penalties:", err);
   }
@@ -63,12 +59,8 @@ async function runReminderJob() {
     .lte("scheduled_date", today);
 
   if (!pendingReminders || pendingReminders.length === 0) {
-    console.log("[Cron Job] No pending reminders.");
     return NextResponse.json({ success: true, queued: 0 });
   }
-
-  console.log(`[Cron Job] Processing ${pendingReminders.length} reminders`);
-
   let queued = 0;
   let skipped = 0;
 
@@ -189,9 +181,6 @@ async function runReminderJob() {
       }
     }
   }
-
-  console.log(`[Cron Job] Done. Queued: ${queued}, Skipped: ${skipped}`);
-
   return NextResponse.json({
     success: true,
     queued,

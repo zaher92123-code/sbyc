@@ -54,7 +54,7 @@ export default function NewSessionPage() {
     if (isNaN(fee)) return;
     let total = 0;
     if (form.pricing_model === "daily")   total = fee * days;
-    else if (form.pricing_model === "weekly")  total = fee * Math.max(1, Math.ceil(days / 7));
+    else if (form.pricing_model === "weekly")  total = fee * Math.max(1, Math.round(days / 7));
     else if (form.pricing_model === "monthly") {
       const months = (end.getFullYear() - start.getFullYear()) * 12
                    + (end.getMonth() - start.getMonth())
