@@ -6,6 +6,7 @@ import { Alert } from "@/components/ui";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { T } from "@/lib/i18n/translations";
+import DateField from "@/components/DateField";
 
 export default function NewServiceOrderPage() {
   const router = useRouter();
@@ -79,7 +80,7 @@ export default function NewServiceOrderPage() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="form-label">{t("scheduledDate")}</label>
-            <input type="date" value={form.scheduled_date} onChange={f("scheduled_date")} className="form-input" />
+            <DateField value={form.scheduled_date} onChange={f("scheduled_date")} className="form-input" />
           </div>
           <div>
             <label className="form-label">{t("amount")} (OMR) *</label>

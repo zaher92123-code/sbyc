@@ -6,6 +6,7 @@ import { Alert, Badge, EmptyState } from "@/components/ui";
 import { IconExpense } from "@/components/ui/Icons";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { T } from "@/lib/i18n/translations";
+import DateField from "@/components/DateField";
 
 type Category = { id: string; name_en: string; name_ar: string | null; is_active: boolean };
 type Expense = {
@@ -158,7 +159,7 @@ export default function ExpensesPage() {
             </div>
             <div>
               <label className="form-label">{t("date")} *</label>
-              <input type="date" value={form.expense_date}
+              <DateField value={form.expense_date}
                 onChange={(e) => setForm((p) => ({ ...p, expense_date: e.target.value }))}
                 className="form-input" required />
             </div>

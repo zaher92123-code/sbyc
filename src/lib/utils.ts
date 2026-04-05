@@ -31,7 +31,7 @@ export function nowInMuscat(): Date {
   return toZonedTime(new Date(), MUSCAT_TZ);
 }
 
-export function formatDate(dateStr: string | null | undefined, fmt = "dd MMM yyyy"): string {
+export function formatDate(dateStr: string | null | undefined, fmt = "dd/MM/yyyy"): string {
   if (!dateStr) return "—";
   try {
     const date = parseISO(dateStr);
@@ -45,7 +45,7 @@ export function formatDatetime(dateStr: string | null | undefined): string {
   if (!dateStr) return "—";
   try {
     const date = toZonedTime(new Date(dateStr), MUSCAT_TZ);
-    return formatTZ(date, "dd MMM yyyy, HH:mm", { timeZone: MUSCAT_TZ });
+    return formatTZ(date, "dd/MM/yyyy, HH:mm", { timeZone: MUSCAT_TZ });
   } catch {
     return dateStr;
   }

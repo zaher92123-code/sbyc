@@ -6,6 +6,7 @@ import { formatDate } from "@/lib/utils";
 import { IconBoat, IconPlus, IconWarning, IconClock, IconCheck } from "@/components/ui/Icons";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
+import DateField from "@/components/DateField";
 
 interface Props {
   spot: YardSpot;
@@ -282,7 +283,7 @@ function EmptySpotContent({ spotId, spotNumber, t, onRefresh }: {
           </div>
           <div>
             <label className="text-[10px] text-white/60 font-semibold uppercase tracking-wider">{t("expiryDate")}</label>
-            <input type="date" value={form.until} onChange={(e) => setForm(f => ({ ...f, until: e.target.value }))}
+            <DateField value={form.until} onChange={(e) => setForm(f => ({ ...f, until: e.target.value }))}
               className="w-full mt-1 px-3 py-2 rounded-lg text-xs text-white bg-white/[0.06] border border-white/[0.12] focus:border-purple-400 focus:outline-none" />
           </div>
           <div>

@@ -7,6 +7,7 @@ import { formatOMR, todayMuscat } from "@/lib/utils";
 import { Modal, Alert } from "@/components/ui";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { T } from "@/lib/i18n/translations";
+import DateField from "@/components/DateField";
 
 interface SessionActionsProps {
   session: any;
@@ -138,7 +139,7 @@ export default function SessionActions({ session }: SessionActionsProps) {
           </p>
           <div>
             <label className="form-label">{t("newEndDate")} *</label>
-            <input type="date" value={extendForm.new_end_date} min={session.expected_end_date}
+            <DateField value={extendForm.new_end_date} min={session.expected_end_date}
               onChange={(e) => setExtendForm((f) => ({ ...f, new_end_date: e.target.value }))}
               className="form-input" required />
           </div>
@@ -186,7 +187,7 @@ export default function SessionActions({ session }: SessionActionsProps) {
 
           <div>
             <label className="form-label">{t("actualExitDate")} *</label>
-            <input type="date" value={closeForm.actual_exit_date} min={session.start_date}
+            <DateField value={closeForm.actual_exit_date} min={session.start_date}
               onChange={(e) => setCloseForm((f) => ({ ...f, actual_exit_date: e.target.value }))}
               className="form-input" required />
           </div>

@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Alert } from "@/components/ui";
 import Link from "next/link";
 import BoatPhotoUpload from "@/components/boats/BoatPhotoUpload";
+import DateField from "@/components/DateField";
 
 interface BoatEditFormProps {
   boat: any;
@@ -228,8 +229,7 @@ export default function BoatEditForm({ boat, owners }: BoatEditFormProps) {
 
             <div>
               <label className="form-label">Insurance Expiry</label>
-              <input
-                type="date"
+              <DateField
                 value={form.insurance_expiry}
                 onChange={f("insurance_expiry")}
                 className="form-input font-mono"

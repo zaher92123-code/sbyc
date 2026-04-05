@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { T } from "@/lib/i18n/translations";
 import { IconBoat } from "@/components/ui/Icons";
+import DateField from "@/components/DateField";
 
 export default function NewBoatPage() {
   const router = useRouter();
@@ -215,7 +216,7 @@ export default function NewBoatPage() {
 
             <div>
               <label className="form-label">{t("insuranceExpiry")}</label>
-              <input type="date" value={form.insurance_expiry} onChange={f("insurance_expiry")} className="form-input font-mono" />
+              <DateField value={form.insurance_expiry} onChange={f("insurance_expiry")} className="form-input font-mono" />
             </div>
             <div className="col-span-2">
               <label className="form-label">{t("notes")}</label>

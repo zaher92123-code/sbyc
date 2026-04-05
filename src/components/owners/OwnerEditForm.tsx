@@ -7,6 +7,7 @@ import Link from "next/link";
 import type { Owner } from "@/types";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { T } from "@/lib/i18n/translations";
+import DateField from "@/components/DateField";
 
 type OwnerType = "individual" | "company";
 
@@ -192,8 +193,7 @@ export default function OwnerEditForm({ owner }: { owner: Owner }) {
               </div>
               <div>
                 <label className="form-label">{t("crExpiryDate")}</label>
-                <input
-                  type="date"
+                <DateField
                   value={form.commercial_register_expiry}
                   onChange={f("commercial_register_expiry")}
                   className="form-input"

@@ -6,6 +6,7 @@ import { Alert } from "@/components/ui";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { T } from "@/lib/i18n/translations";
+import DateField from "@/components/DateField";
 
 export default function NewEmployeePage() {
   const router = useRouter();
@@ -129,7 +130,7 @@ export default function NewEmployeePage() {
             </div>
             <div>
               <label className="form-label">{t("hireDate")}</label>
-              <input type="date" value={form.hire_date} onChange={f("hire_date")} className="form-input" />
+              <DateField value={form.hire_date} onChange={f("hire_date")} className="form-input" />
             </div>
           </div>
 

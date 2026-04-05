@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { formatDate } from "@/lib/utils";
 import { Badge, Alert } from "@/components/ui";
+import DateField from "@/components/DateField";
 
 interface BoatOwnersClientProps {
   boat: any;
@@ -173,8 +174,7 @@ export default function BoatOwnersClient({ boat, allOwners }: BoatOwnersClientPr
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="form-label">Owner Since</label>
-              <input
-                type="date"
+              <DateField
                 value={sinceDate}
                 onChange={(e) => setSinceDate(e.target.value)}
                 className="form-input"

@@ -6,6 +6,7 @@ import { Alert } from "@/components/ui";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { T } from "@/lib/i18n/translations";
+import DateField from "@/components/DateField";
 
 export default function NewRentalPage() {
   const router = useRouter();
@@ -85,11 +86,11 @@ export default function NewRentalPage() {
         <div className="grid grid-cols-2 gap-4">
           <div>
             <label className="form-label">{t("startDate")} *</label>
-            <input type="date" value={form.start_date} onChange={f("start_date")} className="form-input" required />
+            <DateField value={form.start_date} onChange={f("start_date")} className="form-input" required />
           </div>
           <div>
             <label className="form-label">{t("endDateLabel")}</label>
-            <input type="date" value={form.end_date} onChange={f("end_date")} className="form-input" />
+            <DateField value={form.end_date} onChange={f("end_date")} className="form-input" />
           </div>
         </div>
         <div>

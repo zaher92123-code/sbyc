@@ -8,6 +8,7 @@ import { Alert } from "@/components/ui";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { IconWarning } from "@/components/ui/Icons";
+import DateField from "@/components/DateField";
 
 export default function NewSessionPage() {
   const router = useRouter();
@@ -53,8 +54,13 @@ export default function NewSessionPage() {
     if (isNaN(fee)) return;
     let total = 0;
     if (form.pricing_model === "daily")   total = fee * days;
-    else if (form.pricing_model === "weekly")  total = fee * Math.ceil(days / 7);
-    else if (form.pricing_model === "monthly") total = fee * Math.ceil(days / 30);
+    else if (form.pricing_model === "weekly")  total = fee * Math.max(1, Math.ceil(days / 7));
+    else if (form.pricing_model === "monthly") {
+      const months = (end.getFullYear() - start.getFullYear()) * 12
+                   + (end.getMonth() - start.getMonth())
+                   + (end.getDate() >= start.getDate() ? 0 : -1);
+      total = fee * Math.max(1, months);
+    }
     else total = fee;
     setForm((f) => ({ ...f, total_due: total.toFixed(3) }));
   }, [form.start_date, form.expected_end_date, form.base_fee, form.pricing_model]);
@@ -123,11 +129,11 @@ export default function NewSessionPage() {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <label className="form-label">{t("startDate_star")}</label>
-              <input type="date" value={form.start_date} onChange={(e) => setForm((f) => ({ ...f, start_date: e.target.value }))} className="form-input" required />
+              <DateField value={form.start_date} onChange={(e) => setForm((f) => ({ ...f, start_date: e.target.value }))} className="form-input" required />
             </div>
             <div>
               <label className="form-label">{t("expectedEndDate_star")}</label>
-              <input type="date" value={form.expected_end_date} min={form.start_date} onChange={(e) => setForm((f) => ({ ...f, expected_end_date: e.target.value }))} className="form-input" required />
+              <DateField value={form.expected_end_date} min={form.start_date} onChange={(e) => setForm((f) => ({ ...f, expected_end_date: e.target.value }))} className="form-input" required />
               {days > 0 && <p className="text-xs text-slate-400 mt-1">{days} {t("daysDuration")}</p>}
             </div>
           </div>

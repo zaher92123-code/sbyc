@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Alert } from "@/components/ui";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { T } from "@/lib/i18n/translations";
+import DateField from "@/components/DateField";
 
 interface Props {
   employeeId: string;
@@ -128,7 +129,7 @@ export default function AddSalaryRecord({ employeeId, baseSalary, allowances, de
         </div>
         <div>
           <label className="text-xs text-slate-500 font-semibold">{t("paymentDate")}</label>
-          <input type="date" value={form.payment_date} onChange={e => setForm(f => ({ ...f, payment_date: e.target.value }))}
+          <DateField value={form.payment_date} onChange={e => setForm(f => ({ ...f, payment_date: e.target.value }))}
             className="form-input text-sm" />
         </div>
         <div className="flex items-end">

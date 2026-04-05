@@ -7,6 +7,7 @@ import { formatOMR, formatDate, todayMuscat } from "@/lib/utils";
 import { Alert } from "@/components/ui";
 import Link from "next/link";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
+import DateField from "@/components/DateField";
 
 export default function NewPaymentPage() {
   const router = useRouter();
@@ -122,7 +123,7 @@ export default function NewPaymentPage() {
           </div>
           <div>
             <label className="form-label">{t("paymentDateStar")}</label>
-            <input type="date" value={form.payment_date} onChange={(e) => setForm((f) => ({ ...f, payment_date: e.target.value }))} className="form-input" required />
+            <DateField value={form.payment_date} onChange={(e) => setForm((f) => ({ ...f, payment_date: e.target.value }))} className="form-input" required />
           </div>
         </div>
 

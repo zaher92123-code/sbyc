@@ -7,6 +7,7 @@ import { IconEdit, IconTrash, IconCheck, IconX } from "@/components/ui/Icons";
 import { useLanguage } from "@/lib/i18n/LanguageContext";
 import { T } from "@/lib/i18n/translations";
 import AddSalaryRecord from "./AddSalaryRecord";
+import DateField from "@/components/DateField";
 
 interface Props {
   employeeId: string;
@@ -179,7 +180,7 @@ export default function SalarySection({ employeeId, baseSalary, allowances, dedu
                       </div>
                       <div>
                         <label className="text-xs text-slate-500 font-semibold">{t("paymentDate")}</label>
-                        <input type="date" value={editForm.payment_date} onChange={ef("payment_date")} className="form-input text-sm" />
+                        <DateField value={editForm.payment_date} onChange={ef("payment_date")} className="form-input text-sm" />
                       </div>
                       <div>
                         <label className="text-xs text-slate-500 font-semibold">{t("notes")}</label>

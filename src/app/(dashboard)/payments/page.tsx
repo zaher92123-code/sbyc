@@ -5,6 +5,7 @@ import { EmptyState } from "@/components/ui";
 import { getT } from "@/lib/i18n/server";
 import { IconCurrency, IconDocument, IconSettings, IconReports, IconPayment } from "@/components/ui/Icons";
 import ServerPagination from "@/components/ui/ServerPagination";
+import DateField from "@/components/DateField";
 
 const PAGE_SIZE = 25;
 
@@ -74,11 +75,11 @@ export default async function PaymentsPage({ searchParams }: { searchParams: Pro
         <form method="get" className="flex flex-wrap gap-3 items-center">
           <div className="flex items-center gap-2 text-sm text-slate-600">
             <label>{t("fromLabel")}</label>
-            <input type="date" name="from" defaultValue={params.from} className="form-input w-40" />
+            <DateField name="from" defaultValue={params.from} className="form-input w-40" />
           </div>
           <div className="flex items-center gap-2 text-sm text-slate-600">
             <label>{t("toLabel")}</label>
-            <input type="date" name="to" defaultValue={params.to} className="form-input w-40" />
+            <DateField name="to" defaultValue={params.to} className="form-input w-40" />
           </div>
           <button type="submit" className="btn-primary px-5">{t("filter")}</button>
           <Link href="/payments" className="btn-secondary">{t("clear")}</Link>
