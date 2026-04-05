@@ -36,7 +36,7 @@ export default function NewSessionPage() {
     async function fetchData() {
       const [{ data: boatsData }, { data: spotsData }] = await Promise.all([
         supabase.from("boats").select("id, name, registration_number, status").order("name"),
-        supabase.from("parking_spots").select("id, spot_number, status").eq("status", "empty").order("spot_number"),
+        supabase.from("parking_spots").select("id, spot_number, status").eq("status", "empty").order("spot_number", { ascending: true }),
       ]);
       setBoats(boatsData || []);
       setSpots(spotsData || []);
