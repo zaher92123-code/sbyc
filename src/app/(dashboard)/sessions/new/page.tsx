@@ -39,7 +39,7 @@ export default function NewSessionPage() {
         supabase.from("parking_spots").select("id, spot_number, status").eq("status", "empty").order("spot_number", { ascending: true }),
       ]);
       setBoats(boatsData || []);
-      setSpots(spotsData || []);
+      setSpots((spotsData || []).sort((a, b) => Number(a.spot_number) - Number(b.spot_number)));
     }
     fetchData();
   }, []);
