@@ -32,7 +32,9 @@ export default function DateField({ value, defaultValue, onChange, min, max, nam
         }
       }}
       options={{
-        dateFormat: "d/m/Y",
+        dateFormat: "Y-m-d",
+        altInput: true,
+        altFormat: "d/m/Y",
         allowInput: true,
         minDate: min || undefined,
         maxDate: max || undefined,
