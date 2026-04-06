@@ -200,6 +200,32 @@
 .num {
   font-family: 'DM Mono', monospace;
   font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum", "lnum";
+  unicode-bidi: plaintext;
+  direction: ltr;
+}
+
+/* Force Latin digits everywhere, regardless of system locale.
+   Prevents Arabic-Indic digit substitution (٠١٢٣) on Arabic-localized machines. */
+.num,
+.font-mono,
+input[type="number"],
+input[type="date"],
+input[type="tel"],
+.flatpickr-input,
+.flatpickr-calendar,
+[data-latin-nums] {
+  font-feature-settings: "tnum", "lnum";
+  -moz-font-feature-settings: "tnum", "lnum";
+  -webkit-font-feature-settings: "tnum", "lnum";
+}
+
+/* Inline numeric spans — wrap any number in <span class="latin-num">123</span>
+   to guarantee it never renders as Eastern Arabic digits */
+.latin-num {
+  unicode-bidi: plaintext;
+  direction: ltr;
+  font-feature-settings: "tnum", "lnum";
 }
 
 /* Toast slide-up animation */
