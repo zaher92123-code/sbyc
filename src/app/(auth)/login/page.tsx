@@ -1,5 +1,5 @@
 "use client";
-import { IconAnchor, IconBoat, IconPayment, IconReports, IconBell, IconLock } from "@/components/ui/Icons";
+import { IconAnchor, IconBoat, IconPayment, IconReports, IconBell, IconLock, IconWarning } from "@/components/ui/Icons";
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
