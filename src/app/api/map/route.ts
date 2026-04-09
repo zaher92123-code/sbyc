@@ -10,7 +10,7 @@ export async function GET() {
       id, spot_number, status, reserved_for_name, reserved_for_phone, reserved_until, reserved_notes,
       parking_sessions(
         id, status, start_date, expected_end_date, total_due, total_paid, remaining_balance, notes, pricing_model,
-        boat:boats(id, name, type, color, length_meters, width_meters, registration_number, photo_url, insurance_company, insurance_expiry),
+        boat:boats(id, name, type, color, length_meters, width_meters, registration_number, photo_url, insurance_company, insurance_expiry, insurance_policy_number),
         boat_id
       )
     `)

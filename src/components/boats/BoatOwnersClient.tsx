@@ -20,7 +20,7 @@ export default function BoatOwnersClient({ boat, allOwners }: BoatOwnersClientPr
     boat.boat_owners || []
   );
   const [selectedOwner, setSelectedOwner] = useState("");
-  const [isPrimary, setIsPrimary] = useState(false);
+  const [isPrimary, setIsPrimary] = useState(currentOwners.length === 0);
   const [sinceDate, setSinceDate] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -33,10 +33,12 @@ export default function BoatOwnersClient({ boat, allOwners }: BoatOwnersClientPr
     setLoading(true);
     setError(null);
 
+    const shouldBePrimary = isPrimary || currentOwners.length === 0;
+
     const { error } = await supabase.from("boat_owners").insert({
       boat_id: boat.id,
       owner_id: selectedOwner,
-      is_primary: isPrimary,
+      is_primary: shouldBePrimary,
       since_date: sinceDate || null,
     });
 
@@ -47,7 +49,7 @@ export default function BoatOwnersClient({ boat, allOwners }: BoatOwnersClientPr
     }
 
     // If set as primary, demote others
-    if (isPrimary) {
+    if (shouldBePrimary) {
       await supabase
         .from("boat_owners")
         .update({ is_primary: false })
