@@ -168,6 +168,11 @@ export const T = {
   registerOwnerFirst:{ en: "Register a new owner first", ar: "سجّل مالكاً جديداً أولاً" },
   registering:       { en: "Registering…",            ar: "جار التسجيل…" },
   registerVessel:    { en: "Register Vessel",         ar: "تسجيل القارب" },
+  editVessel:        { en: "Edit Vessel",             ar: "تعديل القارب" },
+  deleteVessel:      { en: "Delete Vessel",           ar: "حذف القارب" },
+  deleteVesselWarning: { en: "Deleting a boat is permanent and cannot be undone. Boats with active parking sessions cannot be deleted.", ar: "حذف القارب دائم ولا يمكن التراجع عنه. لا يمكن حذف القوارب التي لديها جلسات إيقاف نشطة." },
+  confirmDeleteVessel: { en: "Are you sure? This cannot be undone.", ar: "هل أنت متأكد؟ لا يمكن التراجع عن هذا." },
+  noPrimaryOwner:    { en: "No primary owner",        ar: "لا يوجد مالك رئيسي" },
   // ── Boat photo ──────────────────────────────────────────────────────────────
   boatPhoto:         { en: "Boat Photo",              ar: "صورة القارب" },
   uploadPhoto:       { en: "Upload Photo",            ar: "رفع صورة" },
