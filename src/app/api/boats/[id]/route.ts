@@ -11,9 +11,7 @@ const UpdateBoatSchema = z.object({
   width_meters: z.number().positive().nullable().optional(),
   insurance_company: z.string().max(255).nullable().optional(),
   insurance_expiry: z.string().nullable().optional(),
-  width_meters: z.number().positive().nullable().optional(),
-  insurance_company: z.string().max(255).nullable().optional(),
-  insurance_expiry: z.string().nullable().optional(),
+  insurance_policy_number: z.string().max(100).nullable().optional(),
   notes: z.string().optional(),
   status: z.enum(["available", "parked", "maintenance"]).optional(),
 });

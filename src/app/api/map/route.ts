@@ -54,6 +54,7 @@ export async function GET() {
       boatWidth: boat?.width_meters ? `${boat.width_meters}m` : null,
       insuranceCompany: boat?.insurance_company || null,
       insuranceExpiry: boat?.insurance_expiry || null,
+      insurancePolicyNumber: boat?.insurance_policy_number || null,
       ownerName: ownerData?.full_name || null,
       ownerPhone: ownerData?.phone || null,
       ownerEmail: ownerData?.email || null,

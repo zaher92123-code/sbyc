@@ -30,6 +30,7 @@ export default function BoatEditForm({ boat, owners }: BoatEditFormProps) {
     width_meters: boat.width_meters?.toString() || "",
     insurance_company: boat.insurance_company || "",
     insurance_expiry: boat.insurance_expiry || "",
+    insurance_policy_number: boat.insurance_policy_number || "",
     notes: boat.notes || "",
     status: boat.status || "available",
     owner_id: primaryOwner?.owner_id || "",
@@ -65,6 +66,7 @@ export default function BoatEditForm({ boat, owners }: BoatEditFormProps) {
           : null,
         insurance_company: form.insurance_company || null,
         insurance_expiry: form.insurance_expiry || null,
+        insurance_policy_number: form.insurance_policy_number || null,
         notes: form.notes || undefined,
         status: form.status,
       }),
@@ -233,6 +235,16 @@ export default function BoatEditForm({ boat, owners }: BoatEditFormProps) {
                 value={form.insurance_expiry}
                 onChange={f("insurance_expiry")}
                 className="form-input font-mono"
+              />
+            </div>
+
+            <div className="col-span-2">
+              <label className="form-label">Insurance Policy Number</label>
+              <input
+                value={form.insurance_policy_number}
+                onChange={f("insurance_policy_number")}
+                className="form-input font-mono"
+                placeholder="e.g. POL-2024-001234"
               />
             </div>
 

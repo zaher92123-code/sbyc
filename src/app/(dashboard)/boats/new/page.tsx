@@ -31,9 +31,7 @@ export default function NewBoatPage() {
     width_meters: "",
     insurance_company: "",
     insurance_expiry: "",
-    width_meters: "",
-    insurance_company: "",
-    insurance_expiry: "",
+    insurance_policy_number: "",
     notes: "",
     status: "available",
     owner_id: "",
@@ -59,9 +57,7 @@ export default function NewBoatPage() {
         width_meters: form.width_meters ? parseFloat(form.width_meters) : undefined,
         insurance_company: form.insurance_company || undefined,
         insurance_expiry: form.insurance_expiry || undefined,
-        width_meters: form.width_meters ? parseFloat(form.width_meters) : undefined,
-        insurance_company: form.insurance_company || undefined,
-        insurance_expiry: form.insurance_expiry || undefined,
+        insurance_policy_number: form.insurance_policy_number || undefined,
         owner_id: form.owner_id || undefined,
       }),
     });
@@ -218,6 +214,12 @@ export default function NewBoatPage() {
               <label className="form-label">{t("insuranceExpiry")}</label>
               <DateField value={form.insurance_expiry} onChange={f("insurance_expiry")} className="form-input font-mono" />
             </div>
+
+            <div className="col-span-2">
+              <label className="form-label">{t("insurancePolicyNumber")}</label>
+              <input value={form.insurance_policy_number} onChange={f("insurance_policy_number")} className="form-input font-mono" placeholder={t("insurancePolicyNumberPlaceholder")} />
+            </div>
+
             <div className="col-span-2">
               <label className="form-label">{t("notes")}</label>
               <textarea value={form.notes} onChange={f("notes")} rows={3} className="form-textarea" placeholder={t("anyNotes")} />

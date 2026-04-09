@@ -156,6 +156,8 @@ export const T = {
   insuranceCompany:  { en: "Insurance Company",       ar: "شركة التأمين" },
   insuranceExpiry:   { en: "Insurance Expiry",        ar: "تاريخ انتهاء التأمين" },
   insuranceCompanyPlaceholder: { en: "e.g. Oman Insurance", ar: "مثال: عُمان للتأمين" },
+  insurancePolicyNumber: { en: "Insurance Policy Number", ar: "رقم وثيقة التأمين" },
+  insurancePolicyNumberPlaceholder: { en: "e.g. POL-2024-001234", ar: "مثال: POL-2024-001234" },
   noInsurance:       { en: "No insurance",            ar: "لا يوجد تأمين" },
   insuranceExpired:  { en: "Insurance expired",       ar: "التأمين منتهي" },
   insurance:         { en: "Insurance",               ar: "التأمين" },

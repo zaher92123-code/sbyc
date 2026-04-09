@@ -62,6 +62,7 @@ export default async function BoatDetailPage({ params }: { params: Promise<{ id:
             { label: t("registeredDate"), value: formatDate(boat.created_at) },
             { label: t("insuranceCompany"), value: boat.insurance_company },
             { label: t("insuranceExpiry"),  value: boat.insurance_expiry ? formatDate(boat.insurance_expiry) : null },
+            { label: t("insurancePolicyNumber"), value: boat.insurance_policy_number },
           ].map(({ label, value, isStatus }) => (
             <div key={label} className="flex justify-between text-sm">
               <span className="text-slate-500">{label}</span>

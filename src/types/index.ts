@@ -52,6 +52,10 @@ export type Boat = {
   type: string | null;
   color: string | null;
   length_meters: number | null;
+  width_meters: number | null;
+  insurance_company: string | null;
+  insurance_expiry: string | null;
+  insurance_policy_number: string | null;
   notes: string | null;
   status: BoatStatus;
   created_at: string;

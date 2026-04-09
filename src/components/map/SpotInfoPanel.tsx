@@ -136,6 +136,7 @@ export default function SpotInfoPanel({ spot, onClose, inline = false, onRefresh
             <SectionLabel>{t("insurance")}</SectionLabel>
             <InfoRow label={t("insuranceCompany")} value={spot.insuranceCompany} />
             <InfoRow label={t("insuranceExpiry")}  value={spot.insuranceExpiry} />
+            <InfoRow label={t("insurancePolicyNumber")} value={spot.insurancePolicyNumber} mono />
 
             <SectionLabel>{t("owner")}</SectionLabel>
             <InfoRow label={t("ownerName")} value={spot.ownerName} />

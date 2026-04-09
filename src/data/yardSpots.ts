@@ -51,6 +51,7 @@ export interface YardSpot {
   boatWidth?: string;
   insuranceCompany?: string;
   insuranceExpiry?: string;
+  insurancePolicyNumber?: string;
   // ── Reservation ────────────────────────────────────────────────────────────
   spotDbId?: string;
   reservedForName?: string;

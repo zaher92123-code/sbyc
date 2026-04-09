@@ -174,6 +174,7 @@ export default function YardMapSVG() {
               boatWidth: dbSpot.boatWidth,
               insuranceCompany: dbSpot.insuranceCompany,
               insuranceExpiry: dbSpot.insuranceExpiry,
+              insurancePolicyNumber: dbSpot.insurancePolicyNumber,
               reservedForName: dbSpot.reservedForName,
               reservedForPhone: dbSpot.reservedForPhone,
               reservedUntil: dbSpot.reservedUntil,

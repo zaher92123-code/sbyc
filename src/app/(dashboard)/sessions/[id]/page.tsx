@@ -4,6 +4,7 @@ import Link from "next/link";
 import { formatDate, formatOMR, formatDatetime, getPaymentStatus, daysUntil, generateReminderSchedule } from "@/lib/utils";
 import { SessionStatusBadge, PaymentStatusBadge, Alert, Badge } from "@/components/ui";
 import SessionActions from "@/components/sessions/SessionActions";
+import SessionEditCard from "@/components/sessions/SessionEditCard";
 import PenaltyCard from "@/components/sessions/PenaltyCard";
 import { getT } from "@/lib/i18n/server";
 import { IconWarning, IconClock, IconCheck, IconMail, IconSearch } from "@/components/ui/Icons";
@@ -65,29 +66,7 @@ export default async function SessionDetailPage({ params }: { params: Promise<{ 
       <PenaltyCard sessionId={session.id} sessionStatus={session.status} />
 
       <div className="grid grid-cols-3 gap-5">
-        <div className="card p-5 space-y-3">
-          <h2 className="font-bold text-slate-800 font-display text-sm uppercase tracking-wide">{t("sessionDetails")}</h2>
-          {[
-            { label: t("startDate"),      value: formatDate(session.start_date) },
-            { label: t("expectedEnd"),    value: formatDate(session.expected_end_date) },
-            { label: t("actualExit"),     value: session.actual_exit_date ? formatDate(session.actual_exit_date) : "—" },
-            { label: t("pricingModel"),   value: session.pricing_model },
-            { label: t("baseFee"),        value: formatOMR(session.base_fee) },
-            { label: t("createdBy"),      value: (session as any).created_by_user?.full_name || "System" },
-            { label: t("createdAt"),      value: formatDatetime(session.created_at) },
-          ].map(({ label, value }) => (
-            <div key={label} className="flex justify-between text-sm">
-              <span className="text-slate-500">{label}</span>
-              <span className="font-semibold text-slate-800">{value}</span>
-            </div>
-          ))}
-          {session.notes && (
-            <div className="pt-2 border-t border-slate-100">
-              <p className="text-xs text-slate-400 uppercase tracking-wide font-semibold mb-1">{t("notes")}</p>
-              <p className="text-sm text-slate-600">{session.notes}</p>
-            </div>
-          )}
-        </div>
+        <SessionEditCard session={session} />
 
         <div className="card p-5 space-y-3">
           <h2 className="font-bold text-slate-800 font-display text-sm uppercase tracking-wide">{t("financials")}</h2>
