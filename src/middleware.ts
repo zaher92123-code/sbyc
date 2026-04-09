@@ -30,7 +30,7 @@ export async function middleware(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   // Block hidden modules
-  const hiddenPaths = ["/employees", "/reminders", "/settings"];
+  const hiddenPaths = ["/services", "/employees", "/reminders", "/settings"];
   const isHiddenRoute = hiddenPaths.some(p => request.nextUrl.pathname.startsWith(p));
   if (isHiddenRoute) {
     const redirectUrl = request.nextUrl.clone();
@@ -42,7 +42,7 @@ export async function middleware(request: NextRequest) {
   const isApiRoute = request.nextUrl.pathname.startsWith("/api");
 
   // Block hidden API routes
-  const hiddenApiPaths = ["/api/employees", "/api/reminders", "/api/reminder-rules", "/api/penalties", "/api/notification-queue", "/api/settings"];
+  const hiddenApiPaths = ["/api/services", "/api/employees", "/api/reminders", "/api/reminder-rules", "/api/penalties", "/api/notification-queue", "/api/rentals", "/api/settings"];
   const isHiddenApi = hiddenApiPaths.some(p => request.nextUrl.pathname.startsWith(p));
   if (isHiddenApi) {
     return NextResponse.json({ error: "Not found" }, { status: 404 });
