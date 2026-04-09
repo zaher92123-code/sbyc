@@ -23,7 +23,7 @@ const NAV_ITEMS: NavItem[] = [
   { href: "/owners",             icon: <IconOwner     size={17} />, key: "owners" },
   { href: "/sessions",           icon: <IconSessions  size={17} />, key: "parkingSessions" },
   { href: "/payments",           icon: <IconPayment   size={17} />, key: "payments" },
-  { href: "/expenses",           icon: <IconExpense   size={17} />, key: "expenses" },
+  // { href: "/expenses",           icon: <IconExpense   size={17} />, key: "expenses" },
   { href: "/reports",            icon: <IconReports   size={17} />, key: "reports" },
 ];
 
