@@ -604,6 +604,16 @@ export const T = {
   save:                      { en: "Save",                         ar: "حفظ" },
   delete:                    { en: "Delete",                       ar: "حذف" },
   loading:                   { en: "Loading…",                     ar: "جار التحميل…" },
+  editExpense:               { en: "Edit Expense",                 ar: "تعديل المصروف" },
+  updateExpense:             { en: "Update Expense",               ar: "تحديث المصروف" },
+  totalExpenses:             { en: "Total Expenses",               ar: "إجمالي المصروفات" },
+  expenseCount:              { en: "Expense Count",                ar: "عدد المصروفات" },
+  avgExpense:                { en: "Avg Expense",                  ar: "متوسط المصروف" },
+  topCategory:               { en: "Top Category",                 ar: "الفئة الأعلى" },
+  thisMonth:                 { en: "This month",                   ar: "هذا الشهر" },
+  expenseEntries:            { en: "entries",                      ar: "سجلات" },
+  perEntry:                  { en: "per entry",                    ar: "لكل سجل" },
+  highestSpend:              { en: "Highest spend",                ar: "الأعلى إنفاقاً" },
 
 
   // ── Services ───────────────────────────────────────────────────────────────
