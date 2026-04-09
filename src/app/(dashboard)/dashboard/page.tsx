@@ -60,7 +60,7 @@ export default async function DashboardPage() {
       {/* Stats grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
         <StatCard label={t("totalSpots")} value={s?.total_spots ?? "—"} icon={<IconAnchor size={22} />}
-          accent="#0E7490" sub={`${s?.occupied_spots ?? 0} ${t("occupied")}, ${s?.empty_spots ?? 0} ${t("available")}`} />
+          accent="#0E7490" sub={`${t("occupied")}: ${s?.occupied_spots ?? 0} · ${t("available")}: ${s?.empty_spots ?? 0}`} />
         <StatCard label={t("collectedThisMonth")} value={formatOMR(totalRevenue)} icon={<IconTrendingUp size={22} />}
           accent="#059669" sub={`${t("parking")}: ${formatOMR(s?.collected_this_month ?? 0)} + ${t("rentalsLabel")}: ${formatOMR(monthlyRentalIncome)}`} />
         <StatCard label={t("monthlyExpensesLabel")} value={formatOMR(monthlyExpenses + totalSalary)} icon={<IconExpense size={22} />}
