@@ -29,24 +29,8 @@ export async function middleware(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  // Block hidden modules
-  const hiddenPaths = ["/services", "/employees", "/expenses", "/reminders", "/reports", "/settings"];
-  const isHiddenRoute = hiddenPaths.some(p => request.nextUrl.pathname.startsWith(p));
-  if (isHiddenRoute) {
-    const redirectUrl = request.nextUrl.clone();
-    redirectUrl.pathname = "/dashboard";
-    return NextResponse.redirect(redirectUrl);
-  }
-
   const isAuthRoute = request.nextUrl.pathname.startsWith("/login");
   const isApiRoute = request.nextUrl.pathname.startsWith("/api");
-
-  // Block hidden API routes
-  const hiddenApiPaths = ["/api/services", "/api/employees", "/api/expenses", "/api/reminders", "/api/reminder-rules", "/api/penalties", "/api/notification-queue", "/api/rentals", "/api/settings"];
-  const isHiddenApi = hiddenApiPaths.some(p => request.nextUrl.pathname.startsWith(p));
-  if (isHiddenApi) {
-    return NextResponse.json({ error: "Not found" }, { status: 404 });
-  }
   const isCronRoute = request.nextUrl.pathname.startsWith("/api/cron");
 
   // Allow cron routes with secret header

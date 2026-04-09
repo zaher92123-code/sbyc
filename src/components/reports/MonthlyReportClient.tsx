@@ -9,6 +9,8 @@ interface Stats {
   totalCollected: number; paymentCount: number; adjustments: number;
   totalOutstanding: number; avgPayment: number;
   newSessions: number; closedSessions: number; activeSessions: number;
+  serviceRevenue: number; rentalIncome: number;
+  totalExpenses: number; totalSalaries: number; netProfit: number;
 }
 interface Props {
   month: string; monthLabel: string; marina: string; location: string;
@@ -18,6 +20,9 @@ interface Props {
 function buildPrintHTML(props: Props): string {
   const { monthLabel, marina, location, stats, payments, sessions } = props;
   const today = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
+
+  const totalRevenue = stats.totalCollected + stats.serviceRevenue + stats.rentalIncome;
+  const totalCosts = stats.totalExpenses + stats.totalSalaries;
 
   const paymentRows = payments.map(p => `
     <tr>
@@ -54,12 +59,18 @@ body{font-family:'Segoe UI',Arial,sans-serif;font-size:11px;color:#1e293b;backgr
 .header p{font-size:12px;color:#64748b;margin-top:2px}
 .month-label{font-size:18px;font-weight:700;color:#0E7490;text-align:right}
 .generated{font-size:10px;color:#94a3b8;margin-top:4px;text-align:right}
-.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}
+.kpi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px}
 .kpi{border:1px solid #e2e8f0;border-radius:8px;padding:14px;background:#f8fafc}
-.kpi .val{font-size:20px;font-weight:800;color:#0A1628;font-family:'Courier New',monospace}
-.kpi .val.green{color:#059669}.kpi .val.red{color:#dc2626}.kpi .val.blue{color:#0E7490}
+.kpi .val{font-size:18px;font-weight:800;color:#0A1628;font-family:'Courier New',monospace}
+.kpi .val.green{color:#059669}.kpi .val.red{color:#dc2626}.kpi .val.blue{color:#0369a1}.kpi .val.cyan{color:#0891b2}
 .kpi .lbl{font-size:10px;font-weight:600;color:#64748b;margin-top:4px;text-transform:uppercase;letter-spacing:.05em}
 .kpi .sub{font-size:10px;color:#94a3b8;margin-top:2px}
+.financial-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.fin-box{border:1px solid #e2e8f0;border-radius:8px;padding:16px}
+.fin-box h3{font-size:12px;font-weight:700;color:#0A1628;margin-bottom:10px;border-bottom:1px solid #e2e8f0;padding-bottom:6px}
+.fin-row{display:flex;justify-content:space-between;padding:3px 0;font-size:11px}
+.fin-row.indent{padding-left:12px;color:#64748b;font-size:10px}
+.fin-row.total{font-weight:800;border-top:2px solid #e2e8f0;margin-top:6px;padding-top:6px}
 .sec{font-size:13px;font-weight:700;color:#0A1628;margin-bottom:8px;padding-bottom:6px;border-bottom:1.5px solid #e2e8f0;display:flex;justify-content:space-between}
 .sec span{font-size:10px;font-weight:400;color:#94a3b8}
 table{width:100%;border-collapse:collapse;margin-bottom:28px;font-size:10.5px}
@@ -77,12 +88,33 @@ tfoot td{background:#ecfdf5!important;font-weight:700;border-top:2px solid #0596
   <div><h1>${marina}</h1><p>${location}</p><p style="margin-top:6px;font-size:11px;color:#475569">Monthly Financial &amp; Operations Report</p></div>
   <div><div class="month-label">${monthLabel}</div><div class="generated">Generated on ${today}</div></div>
 </div>
+
+<div class="financial-grid">
+  <div class="fin-box">
+    <h3 style="color:#059669">Revenue Breakdown</h3>
+    <div class="fin-row"><span>Parking Revenue</span><span class="green">${formatOMR(stats.totalCollected)}</span></div>
+    <div class="fin-row"><span>Service Revenue</span><span class="blue" style="color:#0369a1;font-weight:700">${formatOMR(stats.serviceRevenue)}</span></div>
+    <div class="fin-row"><span>Rental Income</span><span style="color:#0891b2;font-weight:700">${formatOMR(stats.rentalIncome)}</span></div>
+    <div class="fin-row total"><span>Total Revenue</span><span class="green">${formatOMR(totalRevenue)}</span></div>
+  </div>
+  <div class="fin-box">
+    <h3 style="color:#dc2626">Costs Breakdown</h3>
+    <div class="fin-row"><span>Employee Salaries</span><span class="red">${formatOMR(stats.totalSalaries)}</span></div>
+    <div class="fin-row"><span>Operating Expenses</span><span class="red">${formatOMR(stats.totalExpenses)}</span></div>
+    <div class="fin-row total"><span>Total Costs</span><span class="red">${formatOMR(totalCosts)}</span></div>
+    <div class="fin-row total" style="border-top-color:${stats.netProfit >= 0 ? '#059669' : '#dc2626'}">
+      <span style="font-size:12px">Net Profit</span>
+      <span style="font-size:14px" class="${stats.netProfit >= 0 ? 'green' : 'red'}">${formatOMR(stats.netProfit)}</span>
+    </div>
+  </div>
+</div>
+
 <div class="kpi-grid">
-  <div class="kpi"><div class="val green">${formatOMR(stats.totalCollected)}</div><div class="lbl">Revenue Collected</div><div class="sub">${stats.paymentCount} payment${stats.paymentCount !== 1 ? "s" : ""}</div></div>
   <div class="kpi"><div class="val red">${formatOMR(stats.totalOutstanding)}</div><div class="lbl">Outstanding Balance</div><div class="sub">Overdue accounts</div></div>
   <div class="kpi"><div class="val blue">${stats.activeSessions}</div><div class="lbl">Active Sessions</div><div class="sub">${stats.newSessions} new · ${stats.closedSessions} closed</div></div>
   <div class="kpi"><div class="val">${formatOMR(stats.avgPayment)}</div><div class="lbl">Average Payment</div><div class="sub">${stats.adjustments} adjustment${stats.adjustments !== 1 ? "s" : ""}</div></div>
 </div>
+
 <div class="sec">Payments Received — ${monthLabel}<span>${payments.length} records · Total: ${formatOMR(stats.totalCollected)}</span></div>
 <table>
   <thead><tr><th>Date</th><th>Vessel</th><th>Spot</th><th>Amount (OMR)</th><th>Method</th><th>Type</th><th>Reference</th></tr></thead>
