@@ -9,7 +9,6 @@ interface Stats {
   totalCollected: number; paymentCount: number; adjustments: number;
   totalOutstanding: number; avgPayment: number;
   newSessions: number; closedSessions: number; activeSessions: number;
-  serviceRevenue: number; rentalIncome: number;
   totalExpenses: number; totalSalaries: number; netProfit: number;
 }
 interface Props {
@@ -21,7 +20,7 @@ function buildPrintHTML(props: Props): string {
   const { monthLabel, marina, location, stats, payments, sessions } = props;
   const today = new Date().toLocaleDateString("en-GB", { day: "2-digit", month: "long", year: "numeric" });
 
-  const totalRevenue = stats.totalCollected + stats.serviceRevenue + stats.rentalIncome;
+  const totalRevenue = stats.totalCollected;
   const totalCosts = stats.totalExpenses + stats.totalSalaries;
 
   const paymentRows = payments.map(p => `
@@ -93,8 +92,7 @@ tfoot td{background:#ecfdf5!important;font-weight:700;border-top:2px solid #0596
   <div class="fin-box">
     <h3 style="color:#059669">Revenue Breakdown</h3>
     <div class="fin-row"><span>Parking Revenue</span><span class="green">${formatOMR(stats.totalCollected)}</span></div>
-    <div class="fin-row"><span>Service Revenue</span><span class="blue" style="color:#0369a1;font-weight:700">${formatOMR(stats.serviceRevenue)}</span></div>
-    <div class="fin-row"><span>Rental Income</span><span style="color:#0891b2;font-weight:700">${formatOMR(stats.rentalIncome)}</span></div>
+    <div class="fin-row indent"><span>${stats.paymentCount} payments · ${stats.adjustments} adjustment(s)</span><span></span></div>
     <div class="fin-row total"><span>Total Revenue</span><span class="green">${formatOMR(totalRevenue)}</span></div>
   </div>
   <div class="fin-box">

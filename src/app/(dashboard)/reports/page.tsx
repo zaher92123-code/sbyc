@@ -60,13 +60,6 @@ export default async function ReportsPage({
     .select(`*, session:parking_sessions(id, total_due, total_paid, remaining_balance, start_date, expected_end_date, boat:boats(id, name, registration_number, type), parking_spot:parking_spots(spot_number))`)
     .gte("payment_date", monthStart).lte("payment_date", monthEnd).order("payment_date");
 
-  const { data: monthServiceOrders } = await supabase
-    .from("service_orders").select("id, total_amount_omr, payment_status, status, scheduled_date, service:services(name)")
-    .gte("scheduled_date", monthStart).lte("scheduled_date", monthEnd);
-
-  const { data: monthRentals } = await supabase
-    .from("rentals").select("id, monthly_rate_omr, status, service:services(name)").eq("status", "active");
-
   const { data: monthExpenses } = await supabase
     .from("expenses").select("id, amount_omr, category:expense_categories(name_en, name_ar)")
     .gte("expense_date", monthStart).lte("expense_date", monthEnd);
@@ -98,12 +91,7 @@ export default async function ReportsPage({
   const totalOutstanding = (overdueAtMonth || []).reduce((s, p: any) => s + Number(p.remaining_balance), 0);
   const avgPayment = paymentCount > 0 ? parkingRevenue / paymentCount : 0;
 
-  const serviceRevenue = (monthServiceOrders || [])
-    .filter((o: any) => o.payment_status === "paid")
-    .reduce((s, o: any) => s + Number(o.total_amount_omr), 0);
-
-  const rentalIncome = (monthRentals || []).reduce((s, r: any) => s + Number(r.monthly_rate_omr), 0);
-  const totalRevenue = parkingRevenue + serviceRevenue + rentalIncome;
+  const totalRevenue = parkingRevenue;
 
   const totalExpenses = (monthExpenses || []).reduce((s, e: any) => s + Number(e.amount_omr), 0);
   const totalSalaries = (monthEmployees || []).reduce((s, e: any) =>
@@ -121,31 +109,29 @@ export default async function ReportsPage({
   const expenseCategories = Object.values(expenseByCategory).sort((a, b) => b.total - a.total);
 
   // ── YEARLY ───────────────────────────────────────────────────────────────
-  let yearlyData: { month: string; parking: number; services: number; rentals: number; expenses: number; salaries: number }[] = [];
+  let yearlyData: { month: string; parking: number; expenses: number; salaries: number }[] = [];
 
   if (report === "yearly") {
     const yearStart = `${selectedYear}-01-01`;
     const yearEnd = `${selectedYear}-12-31`;
 
-    const [{ data: yp }, { data: ys }, { data: ye }] = await Promise.all([
+    const [{ data: yp }, { data: ye }] = await Promise.all([
       supabase.from("payments").select("payment_date, amount").gte("payment_date", yearStart).lte("payment_date", yearEnd),
-      supabase.from("service_orders").select("scheduled_date, total_amount_omr").gte("scheduled_date", yearStart).lte("scheduled_date", yearEnd).eq("payment_status", "paid"),
       supabase.from("expenses").select("expense_date, amount_omr").gte("expense_date", yearStart).lte("expense_date", yearEnd),
     ]);
 
-    const months: Record<string, { parking: number; services: number; rentals: number; expenses: number; salaries: number }> = {};
+    const months: Record<string, { parking: number; expenses: number; salaries: number }> = {};
     for (let m = 1; m <= 12; m++) {
       const key = `${selectedYear}-${String(m).padStart(2, "0")}`;
-      months[key] = { parking: 0, services: 0, rentals: 0, expenses: 0, salaries: 0 };
+      months[key] = { parking: 0, expenses: 0, salaries: 0 };
     }
     (yp || []).forEach((p: any) => { const k = p.payment_date.slice(0, 7); if (months[k]) months[k].parking += Number(p.amount); });
-    (ys || []).forEach((o: any) => { const k = o.scheduled_date.slice(0, 7); if (months[k]) months[k].services += Number(o.total_amount_omr); });
     (ye || []).forEach((e: any) => { const k = e.expense_date.slice(0, 7); if (months[k]) months[k].expenses += Number(e.amount_omr); });
 
     const currentKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}`;
     Object.keys(months).forEach(key => {
       if (selectedYear === String(now.getFullYear()) && key > currentKey) { delete months[key]; }
-      else { months[key].salaries = totalSalaries; months[key].rentals = rentalIncome; }
+      else { months[key].salaries = totalSalaries; }
     });
     yearlyData = Object.entries(months).sort(([a], [b]) => a.localeCompare(b)).map(([month, d]) => ({ month, ...d }));
   }
@@ -188,11 +174,9 @@ export default async function ReportsPage({
 
   // Yearly totals
   const yearTotalParking = yearlyData.reduce((s, m) => s + m.parking, 0);
-  const yearTotalServices = yearlyData.reduce((s, m) => s + m.services, 0);
-  const yearTotalRentals = yearlyData.reduce((s, m) => s + m.rentals, 0);
   const yearTotalExpenses = yearlyData.reduce((s, m) => s + m.expenses, 0);
   const yearTotalSalaries = yearlyData.reduce((s, m) => s + m.salaries, 0);
-  const yearTotalRevenue = yearTotalParking + yearTotalServices + yearTotalRentals;
+  const yearTotalRevenue = yearTotalParking;
   const yearTotalCosts = yearTotalExpenses + yearTotalSalaries;
   const yearNetProfit = yearTotalRevenue - yearTotalCosts;
 
@@ -224,7 +208,7 @@ export default async function ReportsPage({
               marina={MARINA_CONFIG.name} location={MARINA_CONFIG.location}
               stats={{ totalCollected: parkingRevenue, paymentCount, adjustments, totalOutstanding, avgPayment,
                 newSessions: newSessions?.length ?? 0, closedSessions: closedSessions?.length ?? 0,
-                activeSessions: activeDuringMonth?.length ?? 0, serviceRevenue, rentalIncome, totalExpenses, totalSalaries, netProfit }}
+                activeSessions: activeDuringMonth?.length ?? 0, totalExpenses, totalSalaries, netProfit }}
               payments={monthPayments || []} sessions={activeDuringMonth || []} />
           )}
           {!["monthly", "yearly"].includes(report) && (
@@ -264,12 +248,8 @@ export default async function ReportsPage({
             <div className="card p-5 text-center">
               <p className="text-3xl font-black text-emerald-600 num">{formatOMR(totalRevenue)}</p>
               <p className="text-sm font-semibold text-slate-600 mt-1">{t("totalRevenue")}</p>
-              <div className="mt-2 flex justify-center gap-3 text-[10px] text-slate-400">
-                <span>{t("parking")}: {formatOMR(parkingRevenue)}</span>
-                <span>·</span>
-                <span>{t("services")}: {formatOMR(serviceRevenue)}</span>
-                <span>·</span>
-                <span>{t("rentalsLabel")}: {formatOMR(rentalIncome)}</span>
+              <div className="mt-2 text-[10px] text-slate-400">
+                {t("parkingRevenue")}
               </div>
             </div>
             <div className="card p-5 text-center">
@@ -293,8 +273,7 @@ export default async function ReportsPage({
             <div className="card p-5 space-y-2.5">
               <h3 className="text-xs font-bold uppercase tracking-wide text-slate-400">{t("revenueBreakdownReport")}</h3>
               <div className="flex justify-between text-sm"><span className="text-slate-600">{t("parkingRevenue")}</span><span className="num font-semibold text-emerald-600">{formatOMR(parkingRevenue)}</span></div>
-              <div className="flex justify-between text-sm"><span className="text-slate-600">{t("serviceRevenue")}</span><span className="num font-semibold text-blue-600">{formatOMR(serviceRevenue)}</span></div>
-              <div className="flex justify-between text-sm"><span className="text-slate-600">{t("rentalIncome")}</span><span className="num font-semibold text-cyan-600">{formatOMR(rentalIncome)}</span></div>
+              <div className="flex justify-between text-sm text-slate-400 text-xs mt-1"><span>{paymentCount} {t("payments").toLowerCase()}</span><span>{adjustments} {t("adjustment").toLowerCase()}(s)</span></div>
             </div>
             <div className="card p-5 space-y-2.5">
               <h3 className="text-xs font-bold uppercase tracking-wide text-slate-400">{t("costsBreakdown")}</h3>
@@ -431,8 +410,7 @@ export default async function ReportsPage({
               <table className="w-full data-table text-sm">
                 <thead><tr>
                   <th>{t("month")}</th>
-                  <th>{t("parkingRevenue")}</th><th>{t("serviceRevenue")}</th><th>{t("rentalIncome")}</th>
-                  <th className="bg-emerald-900 text-emerald-100">{t("totalRevenue")}</th>
+                  <th>{t("parkingRevenue")}</th>
                   <th>{t("operatingExpenses")}</th><th>{t("salaries")}</th>
                   <th className="bg-red-900 text-red-100">{t("totalCosts")}</th>
                   <th className="bg-slate-700">{t("netProfitReport")}</th>
@@ -440,17 +418,13 @@ export default async function ReportsPage({
                 </tr></thead>
                 <tbody>
                   {yearlyData.map((m) => {
-                    const rev = m.parking + m.services + m.rentals;
                     const cost = m.expenses + m.salaries;
-                    const profit = rev - cost;
+                    const profit = m.parking - cost;
                     const lbl = new Date(`${m.month}-01`).toLocaleDateString("en-GB", { month: "short" });
                     return (
                       <tr key={m.month}>
                         <td className="font-semibold text-slate-800">{lbl}</td>
                         <td className="num text-emerald-600">{formatOMR(m.parking)}</td>
-                        <td className="num text-blue-600">{formatOMR(m.services)}</td>
-                        <td className="num text-cyan-600">{formatOMR(m.rentals)}</td>
-                        <td className="num font-bold text-emerald-700 bg-emerald-50">{formatOMR(rev)}</td>
                         <td className="num text-red-500">{formatOMR(m.expenses)}</td>
                         <td className="num text-red-500">{formatOMR(m.salaries)}</td>
                         <td className="num font-bold text-red-600 bg-red-50">{formatOMR(cost)}</td>
@@ -463,9 +437,6 @@ export default async function ReportsPage({
                 <tfoot><tr className="bg-slate-50 border-t-2 border-slate-300">
                   <td className="px-4 py-3 font-black text-slate-800">{t("total")}</td>
                   <td className="px-4 py-3 num font-bold text-emerald-700">{formatOMR(yearTotalParking)}</td>
-                  <td className="px-4 py-3 num font-bold text-blue-700">{formatOMR(yearTotalServices)}</td>
-                  <td className="px-4 py-3 num font-bold text-cyan-700">{formatOMR(yearTotalRentals)}</td>
-                  <td className="px-4 py-3 num font-black text-emerald-800 bg-emerald-100">{formatOMR(yearTotalRevenue)}</td>
                   <td className="px-4 py-3 num font-bold text-red-600">{formatOMR(yearTotalExpenses)}</td>
                   <td className="px-4 py-3 num font-bold text-red-600">{formatOMR(yearTotalSalaries)}</td>
                   <td className="px-4 py-3 num font-black text-red-700 bg-red-100">{formatOMR(yearTotalCosts)}</td>
